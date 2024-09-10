@@ -3,38 +3,45 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
-                // Add your build commands here
+                script {
+                    sh 'npm install'  // Replace with your build commands
+                    sh 'npm run build'
+                }
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
-                // Add your test commands here
+                script {
+                    sh 'npm test' // Replace with your test commands
+                }
             }
         }
         stage('Code Quality Analysis') {
             steps {
-                echo 'Analyzing code quality...'
-                // Add your code quality analysis commands here
+                script {
+                    sh 'sonar-scanner' // Replace with your code quality tool command
+                }
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
-                // Add your deployment commands here
+                script {
+                    sh 'docker-compose up -d' // Replace with your deployment commands
+                }
             }
         }
         stage('Release') {
             steps {
-                echo 'Releasing...'
-                // Add your release commands here
+                script {
+                    sh 'aws deploy push --application-name MyApp --s3-location s3://my-bucket/my-app.zip' // Replace with your release commands
+                }
             }
         }
         stage('Monitoring and Alerting') {
             steps {
-                echo 'Monitoring...'
-                // Add your monitoring commands here
+                script {
+                    sh 'curl -X POST http://monitoring-service/alert -d "message=Deployment complete"' // Replace with your monitoring setup commands
+                }
             }
         }
     }
